@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <style>
+        canvas {
+            /*border: 5px dashed black;*/
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            z-index: -1;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            margin: auto;
+            text-align: center;
+        }
+
+        td {
+            padding: 1em;
+        }
+
+        #iter {
+            padding: 1em;
+            text-align: center;
+        }
+
+        #options {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            background: white;
+            z-index: 1;
+            display: none;
+        }
+
+        body {
+            overflow: hidden;
+            margin: 0;
+            text-align: center;
+        }
+
+        button {
+            position: fixed;
+            left: 0px;
+            top: 0px;
+            z-index: 2;
+        }
+    </style>
+    <script id="vertex-shader" type="x-shader/x-vertex">
+    attribute vec4 vPosition;
+    attribute vec4 color;
+    varying vec4 vColor;
+    void main(){
+        gl_Position = vPosition;
+        vColor = color;
+    }
+    </script>
+    <script id="fragment-shader" type="x-shader/x-fragment">
+    precision mediump float;
+
+    varying vec4 vColor;
+    void main(){
+        gl_FragColor = vColor;
+    }
+    </script>
+
+    <script type="text/javascript" src="lib/webgl-utils.js"></script>
+    <script type="text/javascript" src="lib/initShaders.js"></script>
+    <script type="text/javascript" src="lib/MV.js"></script>
+    <script type="text/javascript" src="CS465ASSG1.js"></script>
+</head>
+
+<body>
+<canvas id="gl-canvas">
+    Oops ... your browser doesn't support the HTML5 canvas element
+</canvas>
+<button onclick="showOptions(this)">Options</button>
+<div id="options">
+    <table>
+        <tr>
+            <td>
+                <h3>Canvas Color</h3>
+                <input type="color" value="#808080" id="cc"/>
+            </td>
+            <td>
+                <h3>BG Color</h3>
+                <input type="color" value="#FF0000" id="bgc"/>
+            </td>
+            <td>
+                <h3>FG Color</h3>
+                <input type="color" value="#FFFFFF" id="fgc"/>
+            </td>
+        </tr>
+    </table>
+    <div id="iter">
+        <h3>Iteration</h3> Current Value :<span id="currentIterationIndicator">2</span>
+        <br/> 1 <input type="range" min="1" max="7" value="2" id="iterationSlider"/> 7
+    </div>
+    <h3>Draw Mode</h3>
+    <h4>BG</h4>
+    <input type="radio" name="modeBG" value="line" checked> Line
+    <input type="radio" name="modeBG" value="filled"> Filled
+    <h4>FG</h4>
+    <input type="radio" name="modeFG" value="line" checked> Line
+    <input type="radio" name="modeFG" value="filled"> Filled
+
+    <h3>Save</h3>
+    <input type="button" value="Save" onclick="save()"/>
+    <h3>Load</h3>
+    <input type="file" id="file" name="Load"/>
+</div>
+</body>
+<script type="text/javascript" src="HTMLController.js"></script>
+</html>
